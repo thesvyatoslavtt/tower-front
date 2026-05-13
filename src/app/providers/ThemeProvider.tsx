@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { useAppSelector } from "@/app/store";
+import { THEME } from "@/app/uiSlice";
 
 import type { ReactNode } from "react";
 
@@ -13,7 +14,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.toggle("dark", theme === "dark");
+    root.classList.toggle(THEME.dark, theme === THEME.dark);
   }, [theme]);
 
   return <>{children}</>;

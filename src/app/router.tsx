@@ -7,7 +7,7 @@ function HomePage() {
     <div className="space-y-2">
       <h1 className="text-2xl font-semibold">Tower v2</h1>
       <p className="text-[var(--color-muted-foreground)]">
-        Bootstrap complete. Modules will be added per PLAN.md.
+        Bootstrap complete. Modules will be added per docs/roadmap.md.
       </p>
     </div>
   );

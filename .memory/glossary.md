@@ -1,10 +1,10 @@
 # Glossary
 
-(Заполняется по мере появления доменных терминов. Стартовый минимум из tower.)
+(Filled in as domain terms appear. Initial baseline from tower.)
 
-- **Unit** — организационное подразделение (Engineering, Design, ...).
-- **Type** — тип занятости (FTE, Contractor, ...).
-- **Probation** — испытательный срок.
-- **Allocation** — назначение сотрудника на проект с процентом загрузки.
-- **Bench** — сотрудник без активной аллокации.
-- **Former** — бывший сотрудник (dismissed).
+- **Unit** — organizational unit (Engineering, Design, ...).
+- **Type** — employment type (FTE, Contractor, ...).
+- **Probation** — probation period.
+- **Allocation** — assignment of an employee to a project with a load percentage.
+- **Bench** — employee without an active allocation.
+- **Former** — former employee (dismissed).

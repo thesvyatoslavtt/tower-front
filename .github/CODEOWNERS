@@ -1,0 +1,14 @@
+# Default owner for everything not matched below.
+*                       @stiutiunnyk
+
+# Factory contract — changes require explicit human review.
+/.factory/              @stiutiunnyk
+/.github/               @stiutiunnyk
+/scripts/factory-*.mjs  @stiutiunnyk
+
+# Architectural rules and docs — drift here is a spec change, not a code change.
+/CLAUDE.md              @stiutiunnyk
+/docs/                  @stiutiunnyk
+/.memory/               @stiutiunnyk
+/eslint.config.js       @stiutiunnyk
+/tsconfig*.json         @stiutiunnyk

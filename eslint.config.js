@@ -44,6 +44,14 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "TSEnumDeclaration",
+          message:
+            "Use `as const` object + literal union instead of TS enum. See CLAUDE.md → Code style → Domain string constants.",
+        },
+      ],
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -51,9 +59,22 @@ export default tseslint.config(
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "no-multiple-empty-lines": ["error", { max: 1 }],
-      "max-lines": ["warn", { max: 300, skipBlankLines: true, skipComments: true }],
+      "max-lines": ["error", { max: 400, skipBlankLines: true, skipComments: true }],
       "max-lines-per-function": ["warn", { max: 80, skipBlankLines: true, skipComments: true }],
       "id-length": ["error", { min: 2, exceptions: ["_"] }],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          selector: "variableLike",
+          format: ["camelCase", "PascalCase", "UPPER_CASE"],
+          leadingUnderscore: "allow",
+        },
+        {
+          selector: "typeLike",
+          format: ["PascalCase"],
+        },
+      ],
+      "import/no-default-export": "error",
       "import/order": [
         "error",
         {
@@ -78,6 +99,18 @@ export default tseslint.config(
           ],
         },
       ],
+    },
+  },
+  {
+    files: [
+      "src/**/pages/**/*.{ts,tsx}",
+      "**/*.config.{ts,js,mjs}",
+      "vite.config.ts",
+      "vitest.config.ts",
+      "eslint.config.js",
+    ],
+    rules: {
+      "import/no-default-export": "off",
     },
   },
 );

@@ -15,3 +15,17 @@ dist-ssr
 
 coverage
 .vite
+
+# Override the user's global gitignore: in this repo `.claude/` is project
+# infrastructure (skills, commands, headless settings) and MUST be tracked.
+# Keep personal/local overrides untracked.
+!.claude/
+!.claude/**
+.claude/settings.local.json
+.claude/.session/
+.claude/logs/
+
+# Same idea for `.factory/` — machine-readable contract for the agent factory.
+!.factory/
+!.factory/**
+.factory/report.json

@@ -14,8 +14,17 @@
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "check": "yarn lint && yarn typecheck && yarn test",
+    "check:ci": "yarn lint && yarn typecheck && yarn test",
+    "docs:sync": "echo 'docs:sync runs the check-docs-sync skill; wire to Claude Code CLI in CI' && exit 0",
+    "factory:gate": "node scripts/factory-gate.mjs",
+    "factory:env": "node scripts/check-env.mjs",
     "prepare": "husky"
   },
+  "engines": {
+    "node": ">=20.19 <23",
+    "yarn": "1.x"
+  },
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
     "clsx": "^2.1.1",

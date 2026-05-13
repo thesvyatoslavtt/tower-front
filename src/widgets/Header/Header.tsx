@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 
-import { setTheme } from "@/app/uiSlice";
+import { NEXT_THEME, THEME, setTheme } from "@/app/uiSlice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { cn } from "@/shared/lib/utils";
 
@@ -9,7 +9,7 @@ export function Header() {
   const theme = useAppSelector((state) => state.ui.theme);
 
   const handleToggleTheme = () => {
-    dispatch(setTheme(theme === "light" ? "dark" : "light"));
+    dispatch(setTheme(NEXT_THEME[theme]));
   };
 
   return (
@@ -27,7 +27,7 @@ export function Header() {
         className="rounded-md p-2 hover:bg-[var(--color-accent)]"
         aria-label="Toggle theme"
       >
-        {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+        {theme === THEME.light ? <Moon size={18} /> : <Sun size={18} />}
       </button>
     </header>
   );

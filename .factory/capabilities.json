@@ -1,0 +1,89 @@
+{
+  "$schema_version": 1,
+  "repo": "tower-front",
+  "generated_from": ".claude/skills/",
+  "skills": [
+    {
+      "name": "add-component",
+      "description": "Add a React component in the right layer (shared/ui vs modules/<m>/components vs widgets), named export, file ≤300 lines.",
+      "inputs": ["layer", "name", "props_shape"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-form",
+      "description": "Add a form using react-hook-form + zod. DTO colocated with the zod schema, no useState for fields.",
+      "inputs": ["module", "name", "fields", "submit_endpoint"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-module",
+      "description": "Scaffold a new business-domain module under src/modules/<name>/ with folders, barrel, permissions stub, CLAUDE.md, and app registration.",
+      "inputs": ["module_name", "primary_entity"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-msw-handler",
+      "description": "Add or extend an MSW handler for an external API not owned by a module's RTK endpoint.",
+      "inputs": ["endpoint", "method", "response_shape"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-page",
+      "description": "Add a new page to an existing module — default export for React.lazy, route registered in app/router.tsx with RBAC guard.",
+      "inputs": ["module", "page_name", "route_path", "permission_key"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-permission",
+      "description": "Declare a new permission key (module-local or shared), update the Role→Permission matrix and docs/rbac.md.",
+      "inputs": ["key", "scope", "roles"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-rtk-endpoint",
+      "description": "Add a new RTK Query endpoint with DTO + zod schema, providesTags/invalidatesTags, MSW handler, fixture, and module CLAUDE.md update.",
+      "inputs": ["module", "endpoint_name", "method", "url", "response_shape"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-table",
+      "description": "Add a data table built on shadcn Table + RTK Query, skeleton/empty/error states, RBAC-filtered columns via <Can/>.",
+      "inputs": ["module", "name", "query_endpoint", "columns"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-test",
+      "description": "Add a unit/component test (Vitest + Testing Library) or e2e test (Playwright). Colocates the test file with the code.",
+      "inputs": ["target_path", "kind"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "add-widget",
+      "description": "Add a cross-module widget under src/widgets/<Name>/. Thin compositions over module types and permission keys; never module UI or runtime.",
+      "inputs": ["widget_name", "consumes_modules"],
+      "outputs_kind": "code_change"
+    },
+    {
+      "name": "check-docs-sync",
+      "description": "Verify docs/* (the authoritative spec) matches the implementation in src/, .memory/, modules' CLAUDE.md, and eslint.config.js. Blocking gate.",
+      "inputs": [],
+      "outputs_kind": "report"
+    },
+    {
+      "name": "split-large-file",
+      "description": "Split a file >300 lines (warn) or >400 lines (ESLint error). Extracts subcomponents, hooks, and *.config.ts files.",
+      "inputs": ["file_path"],
+      "outputs_kind": "code_change"
+    }
+  ],
+  "gates": [
+    { "id": "install", "command": "yarn install --frozen-lockfile" },
+    { "id": "env", "command": "node scripts/check-env.mjs" },
+    { "id": "typecheck", "command": "yarn typecheck" },
+    { "id": "lint", "command": "yarn lint" },
+    { "id": "test", "command": "yarn test" },
+    { "id": "build", "command": "yarn build" },
+    { "id": "docs_sync", "command": "yarn run docs:sync" }
+  ],
+  "report_path": ".factory/report.json"
+}

@@ -2,7 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export type Theme = "light" | "dark";
+export const THEME = {
+  light: "light",
+  dark: "dark",
+} as const;
+
+export type Theme = (typeof THEME)[keyof typeof THEME];
+
+export const NEXT_THEME: Record<Theme, Theme> = {
+  [THEME.light]: THEME.dark,
+  [THEME.dark]: THEME.light,
+};
 
 export interface UiState {
   theme: Theme;
@@ -10,7 +20,7 @@ export interface UiState {
 }
 
 const initialState: UiState = {
-  theme: "light",
+  theme: THEME.light,
   sidebarCollapsed: false,
 };
 

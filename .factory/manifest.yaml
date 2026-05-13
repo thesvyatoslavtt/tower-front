@@ -1,0 +1,144 @@
+# Factory manifest — machine-readable contract between this repo and the agent factory.
+# The factory shallow-clones only `.factory/` first, reads this file, decides routing,
+# then full-clones if work is required here.
+#
+# Source of truth for project rules: CLAUDE.md + docs/*.md (see ai_entrypoint below).
+# This file MUST stay in sync with package.json scripts and .claude/skills/*.
+
+schema_version: 1
+
+project:
+  name: tower-front
+  repo_role: frontend
+  description: >
+    Agent-driven React 19 + Vite + TS frontend. Module-per-domain architecture,
+    RBAC via permission keys, RTK Query for server state, shadcn/ui + Tailwind tokens.
+
+jira:
+  # All Jira project keys whose tasks may produce work in this repo.
+  keys:
+    - TWR
+  # Status transitions the factory is allowed to perform.
+  transitions:
+    on_pr_opened: "In Review"
+    on_pr_merged: "Done"
+    on_failure: "Needs Human"
+
+stack:
+  runtime: node
+  node: "20"
+  package_manager: yarn
+  yarn: "1"
+  framework: react
+  framework_version: "19"
+  language: typescript
+  bundler: vite
+
+commands:
+  install: "yarn install --frozen-lockfile"
+  typecheck: "yarn typecheck"
+  lint: "yarn lint"
+  test: "yarn test"
+  build: "yarn build"
+  check: "yarn run check"
+  docs_sync: "yarn run docs:sync"
+  gate: "yarn run factory:gate"
+
+# What this repo can produce as an artifact when a task is routed here.
+outputs:
+  - kind: pull_request
+    base_branch: main
+    branch_prefix: "factory/"
+    title_template: "{{jira_key}}: {{summary}}"
+    labels: [factory, frontend]
+    draft: false
+
+# Coarse-grained domains the factory router uses to decide if a task fits this repo.
+# Fine-grained module index lives in src/modules/<name>/module.json (TODO).
+domains:
+  - id: auth
+    description: Login, session, current-user. UI only — token issuance is backend.
+  - id: rbac
+    description: Permission keys + <Can/> guards. No role compares in UI.
+  - id: ui
+    description: shadcn/ui primitives, Tailwind tokens, theme/sidebar slices.
+  - id: modules
+    description: Business modules under src/modules/* (employees, dashboard, ...).
+  - id: widgets
+    description: Cross-module compositions in src/widgets/* (Header, Sidebar, ...).
+
+# Pointers the factory MUST read before generating any change.
+ai_entrypoint:
+  primary: CLAUDE.md
+  docs:
+    - docs/architecture.md
+    - docs/code-style.md
+    - docs/rbac.md
+    - docs/auth.md
+    - docs/skills.md
+  memory:
+    - .memory/MEMORY.md
+  routing: .factory/routing.md
+  capabilities: .factory/capabilities.json
+  claude_settings: .factory/claude-settings.json
+
+# Skills the factory is allowed to invoke in this repo. Names must match
+# .claude/skills/<name>/. Disallowed skills are blocked at the orchestrator.
+skills_allowed:
+  - add-component
+  - add-form
+  - add-module
+  - add-msw-handler
+  - add-page
+  - add-permission
+  - add-rtk-endpoint
+  - add-table
+  - add-test
+  - add-widget
+  - check-docs-sync
+  - split-large-file
+
+# Gates that MUST pass before a PR is opened. The orchestrator runs them in order
+# and aborts on the first non-zero exit code.
+gates:
+  - id: install
+    command: "yarn install --frozen-lockfile"
+  - id: env
+    command: "node scripts/check-env.mjs"
+  - id: typecheck
+    command: "yarn typecheck"
+  - id: lint
+    command: "yarn lint"
+  - id: test
+    command: "yarn test"
+  - id: build
+    command: "yarn build"
+  - id: docs_sync
+    command: "yarn run docs:sync"
+report_path: .factory/report.json
+
+# Hard limits the factory enforces around an agent run in this repo.
+limits:
+  max_wallclock_minutes: 25
+  max_self_review_iterations: 3
+  max_files_changed: 80
+  max_loc_changed: 2500
+
+# Files/dirs the agent MUST NOT touch unless the Jira task explicitly targets them.
+# Enforced by the orchestrator post-diff, not by ESLint.
+protected_paths:
+  - .factory/**
+  - .github/**
+  - .husky/**
+  - yarn.lock
+  - package.json
+  - tsconfig*.json
+  - vite.config.*
+  - eslint.config.*
+
+owners:
+  - s.tiutiunnyk@artk.ai
+
+observability:
+  langfuse_project: tower-front
+  emit_trace_url_in_pr: true
