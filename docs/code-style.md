@@ -285,6 +285,34 @@ return (
 );
 ```
 
+**Including JSX expressions.** ESLint's `react/jsx-newline` only enforces blank lines between **JSX elements**, not between elements and `{expression}` siblings. The convention is stricter: **always** put a blank line between sibling JSX children when at least one of them is a `{expression && <Element/>}`, a `{ternary ? <A/> : <B/>}`, a `.map(...)` block, or any multi-line element. Reviewer flags violations manually.
+
+**Bad** — ESLint passes but reviewer rejects:
+
+```tsx
+<div>
+  <h1>
+    {icon}
+    <span>{title}</span>
+  </h1>
+  {subtitle && <p className="text-muted-foreground mt-0.5 text-sm">{subtitle}</p>}
+</div>
+```
+
+**Good**:
+
+```tsx
+<div>
+  <h1>
+    {icon}
+
+    <span>{title}</span>
+  </h1>
+
+  {subtitle && <p className="text-muted-foreground mt-0.5 text-sm">{subtitle}</p>}
+</div>
+```
+
 The same rule applies inside `.map` callbacks rendering multi-line JSX: blank line between the guard (`if (...) return null;`), derived constants, and the returned JSX.
 
 ```tsx
