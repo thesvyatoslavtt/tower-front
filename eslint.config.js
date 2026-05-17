@@ -74,7 +74,7 @@ export default tseslint.config(
         "error",
         { allowAllPropertiesOnSameLine: false },
       ],
-      "react/jsx-newline": ["error", { prevent: false }],
+      "react/jsx-newline": ["error", { prevent: true, allowMultilines: true }],
       "padding-line-between-statements": [
         "error",
         { blankLine: "always", prev: "*", next: "return" },

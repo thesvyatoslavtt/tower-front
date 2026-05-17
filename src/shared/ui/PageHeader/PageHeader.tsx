@@ -12,7 +12,6 @@ export const PageHeader = ({ title, subtitle, actions, icon }: PageHeaderProps) 
     <div>
       <h1 className="text-foreground flex items-center gap-2 text-xl font-bold">
         {icon}
-
         <span>{title}</span>
       </h1>
 

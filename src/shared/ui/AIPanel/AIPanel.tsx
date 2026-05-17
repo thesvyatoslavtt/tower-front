@@ -38,7 +38,6 @@ export const AIPanel = ({ items, onAction }: AIPanelProps) => {
         style={{ color: "var(--color-info)" }}
       >
         <Sparkles size={13} />
-
         <span className="text-[11px] font-bold tracking-wider uppercase">AI Insights</span>
 
         <span className="text-muted-foreground ml-auto text-[10px]">
@@ -83,7 +82,6 @@ export const AIPanel = ({ items, onAction }: AIPanelProps) => {
                 }}
               >
                 {item.urgent ? <Play size={10} /> : <Eye size={10} />}
-
                 {item.action || (item.urgent ? "Act Now" : "Review")}
               </button>
 

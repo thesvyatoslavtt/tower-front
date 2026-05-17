@@ -29,7 +29,6 @@ export const Sidebar = () => (
             }
           >
             <Icon size={16} />
-
             {item.label}
           </NavLink>
         );

@@ -243,7 +243,8 @@ export const Drawer = ({ open, onClose, children }: DrawerProps) => {
 
 ### Inside JSX
 
-Sibling elements **must** be separated by a blank line whenever any of them is multi-line. Enforced by ESLint `react/jsx-newline`.
+Sibling elements **must** be separated by a blank line whenever any of them is multi-line.
+**Short consecutive single-line expressions/elements** (`{a}{b}`, `<span>a</span><span>b</span>`) **may stay glued together** — no blank line required and none allowed by the formatter. Enforced by ESLint `react/jsx-newline` with `{ prevent: true, allowMultilines: true }` (allows blank lines only between siblings where at least one is multi-line; forbids them between single-line siblings).
 
 **Good**:
 
@@ -285,9 +286,9 @@ return (
 );
 ```
 
-**Including JSX expressions.** ESLint's `react/jsx-newline` only enforces blank lines between **JSX elements**, not between elements and `{expression}` siblings. The convention is stricter: **always** put a blank line between sibling JSX children when at least one of them is a `{expression && <Element/>}`, a `{ternary ? <A/> : <B/>}`, a `.map(...)` block, or any multi-line element. Reviewer flags violations manually.
+**Including JSX expressions.** The convention applies to expression children too: a blank line between sibling JSX children when at least one of them is a multi-line `{expression && <Element/>}`, multi-line `{ternary ? <A/> : <B/>}`, or `.map(...)` block. Short single-line expressions like `{icon}` or `{Math.abs(n)}%` MAY sit next to each other without a blank line. Reviewer flags violations of the multi-line case manually (ESLint cannot reliably distinguish expression vs element siblings).
 
-**Bad** — ESLint passes but reviewer rejects:
+**Bad** — multi-line `<h1>` glued to multi-line `{subtitle && (...)}` (no blank between two multi-line siblings):
 
 ```tsx
 <div>
@@ -299,17 +300,25 @@ return (
 </div>
 ```
 
-**Good**:
+**Good** — blank line ONLY between the multi-line siblings; `{icon}` + `<span>` stay glued (both single-line):
 
 ```tsx
 <div>
   <h1>
     {icon}
-
     <span>{title}</span>
   </h1>
 
   {subtitle && <p className="text-muted-foreground mt-0.5 text-sm">{subtitle}</p>}
+</div>
+```
+
+**Also good** — consecutive short expressions stay together, no blank needed (and ESLint will REMOVE one if you add it):
+
+```tsx
+<div className="mt-1 text-[11px] font-semibold">
+  {delta >= 0 ? "▲" : "▼"}
+  {Math.abs(delta)}% vs last month
 </div>
 ```
 

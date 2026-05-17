@@ -45,7 +45,6 @@ export const StatBox = ({
     <>
       <div className="text-muted-foreground mb-2 flex items-center gap-2 text-[11px] font-medium tracking-wide">
         {icon}
-
         <span>{label}</span>
       </div>
 
@@ -65,8 +64,7 @@ export const StatBox = ({
             color: delta >= 0 ? "var(--color-positive)" : "var(--color-negative)",
           }}
         >
-          {delta >= 0 ? "▲" : "▼"}
-          {Math.abs(delta)}% vs last month
+          {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}% vs last month
         </div>
       )}
     </>
