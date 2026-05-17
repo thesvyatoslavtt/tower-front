@@ -5,7 +5,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Widgets/Header",
   component: Header,
-  parameters: { layout: "fullscreen" },
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof Header>;
 
 export default meta;

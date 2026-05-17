@@ -7,7 +7,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Widgets/AppLayout",
   component: AppLayout,
-  parameters: { layout: "fullscreen" },
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof AppLayout>;
 
 export default meta;
@@ -26,9 +28,9 @@ const withOutlet = (content: React.ReactNode) => (
 export const Default: Story = {
   render: () =>
     withOutlet(
-      <div className="rounded-md border border-[var(--color-border)] p-6">
+      <div className="rounded-md border border-border p-6">
         <h1 className="text-xl font-semibold">Home</h1>
-        <p className="text-sm text-[var(--color-muted-foreground)]">
+        <p className="text-sm text-muted-foreground">
           Outlet content goes here.
         </p>
       </div>,
