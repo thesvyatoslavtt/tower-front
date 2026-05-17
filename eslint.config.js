@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import globals from "globals";
+import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
@@ -41,6 +42,7 @@ export default tseslint.config(
       ],
     },
     plugins: {
+      react,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       import: importPlugin,
@@ -51,14 +53,6 @@ export default tseslint.config(
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
-      ],
-      "no-restricted-syntax": [
-        "error",
-        {
-          selector: "TSEnumDeclaration",
-          message:
-            "Use `as const` object + literal union instead of TS enum. See CLAUDE.md → Code style → Domain string constants.",
-        },
       ],
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/consistent-type-imports": "error",
@@ -79,6 +73,38 @@ export default tseslint.config(
       "object-property-newline": [
         "error",
         { allowAllPropertiesOnSameLine: false },
+      ],
+      "react/jsx-newline": ["error", { prevent: false }],
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "*", next: "return" },
+        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+        { blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"] },
+        { blankLine: "always", prev: "*", next: ["if", "for", "while", "switch", "try"] },
+        { blankLine: "always", prev: ["if", "for", "while", "switch", "try"], next: "*" },
+        { blankLine: "always", prev: "*", next: "function" },
+        { blankLine: "always", prev: "function", next: "*" },
+      ],
+      "arrow-body-style": ["error", "as-needed"],
+      "func-style": ["error", "expression", { allowArrowFunctions: true }],
+      "prefer-arrow-callback": "error",
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "TSEnumDeclaration",
+          message:
+            "Use `as const` object + literal union instead of TS enum. See CLAUDE.md → Code style → Domain string constants.",
+        },
+        {
+          selector: "FunctionDeclaration",
+          message:
+            "Use arrow functions, not `function` declarations. See CLAUDE.md → Code style → Arrow functions.",
+        },
+        {
+          selector: "ExportDefaultDeclaration > FunctionDeclaration",
+          message:
+            "Default-exported pages must be arrow functions, not function declarations.",
+        },
       ],
       "max-lines": ["error", { max: 400, skipBlankLines: true, skipComments: true }],
       "max-lines-per-function": ["warn", { max: 80, skipBlankLines: true, skipComments: true }],

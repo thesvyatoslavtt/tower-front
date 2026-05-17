@@ -4,7 +4,7 @@ import { NEXT_THEME, THEME, setTheme } from "@/app/uiSlice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { cn } from "@/shared/lib/utils";
 
-export function Header() {
+export const Header = () => {
   const dispatch = useAppDispatch();
   const theme = useAppSelector((state) => state.ui.theme);
 
@@ -31,4 +31,4 @@ export function Header() {
       </button>
     </header>
   );
-}
+};

@@ -20,6 +20,7 @@ const withOutlet = (content: React.ReactNode) => (
   <Routes>
     <Route element={<AppLayout />}>
       <Route path="/" element={content} />
+
       <Route path="/people" element={content} />
     </Route>
   </Routes>
@@ -28,11 +29,10 @@ const withOutlet = (content: React.ReactNode) => (
 export const Default: Story = {
   render: () =>
     withOutlet(
-      <div className="rounded-md border border-border p-6">
+      <div className="border-border rounded-md border p-6">
         <h1 className="text-xl font-semibold">Home</h1>
-        <p className="text-sm text-muted-foreground">
-          Outlet content goes here.
-        </p>
+
+        <p className="text-muted-foreground text-sm">Outlet content goes here.</p>
       </div>,
     ),
 };

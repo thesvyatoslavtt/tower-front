@@ -159,6 +159,150 @@ Enforced by ESLint:
 "object-property-newline": ["error", { allowAllPropertiesOnSameLine: false }],
 ```
 
+## Arrow functions only
+
+All components, hooks, and utility functions are written as **arrow functions assigned to a `const`**. The `function` keyword is forbidden in `src/` (ESLint `func-style` + `no-restricted-syntax` block it).
+
+**Good**:
+
+```tsx
+export const AIPanel = ({ items }: AIPanelProps) => {
+  // ...
+  return <div>{...}</div>;
+};
+
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+```
+
+**Bad**:
+
+```tsx
+export function AIPanel({ items }: AIPanelProps) { ... }     // function keyword forbidden
+function helper() { ... }                                     // same
+```
+
+Arrow body uses an expression body (`=> foo`) when the function is one-liner. Block body (`=> { ... }`) when it has multiple statements. `arrow-body-style: ["error", "as-needed"]` enforces this.
+
+## Empty lines between logic blocks (JS & JSX)
+
+Code inside a function body and JSX should breathe. Every **logical block** is separated by a blank line.
+
+### Inside a function body
+
+Required blank line between:
+
+- `const`/`let`/`var` group → next statement that isn't another `const`/`let`/`var`
+- previous statement → `if` / `for` / `while` / `switch` / `try`
+- end of `if`/`for`/`while`/`switch`/`try` → next statement
+- any statement → `return` (the `return` is always preceded by a blank line)
+- any statement → a nested `function`/arrow declaration
+
+Enforced by ESLint `padding-line-between-statements`.
+
+**Good**:
+
+```tsx
+export const Drawer = ({ open, onClose, children }: DrawerProps) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handler);
+
+    return () => window.removeEventListener("keydown", handler);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return <div className="drawer">{children}</div>;
+};
+```
+
+**Bad** — no breathing room:
+
+```tsx
+export const Drawer = ({ open, onClose, children }: DrawerProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [open, onClose]);
+  if (!open) return null;
+  return <div className="drawer">{children}</div>;
+};
+```
+
+### Inside JSX
+
+Sibling elements **must** be separated by a blank line whenever any of them is multi-line. Enforced by ESLint `react/jsx-newline`.
+
+**Good**:
+
+```tsx
+return (
+  <div>
+    <header className="flex items-center gap-2">
+      <Logo />
+      <span>{title}</span>
+    </header>
+
+    <main className="px-6 py-4">
+      {items.map((item) => (
+        <Item key={item.id} {...item} />
+      ))}
+    </main>
+
+    <footer>{footer}</footer>
+  </div>
+);
+```
+
+**Bad** — stacked, no separation:
+
+```tsx
+return (
+  <div>
+    <header className="flex items-center gap-2">
+      <Logo />
+      <span>{title}</span>
+    </header>
+    <main className="px-6 py-4">
+      {items.map((item) => (
+        <Item key={item.id} {...item} />
+      ))}
+    </main>
+    <footer>{footer}</footer>
+  </div>
+);
+```
+
+The same rule applies inside `.map` callbacks rendering multi-line JSX: blank line between the guard (`if (...) return null;`), derived constants, and the returned JSX.
+
+```tsx
+{
+  items.map((item, index) => {
+    if (dismissed[index]) return null;
+
+    const accent = accentFor(item);
+
+    return (
+      <div key={item.id} style={{ borderLeft: `3px solid ${accent}` }}>
+        ...
+      </div>
+    );
+  });
+}
+```
+
 ## Component file structure (strict order)
 
 ```tsx

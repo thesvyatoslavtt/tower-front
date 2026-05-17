@@ -85,7 +85,10 @@
       "Bash(./orchestrate.sh --help)",
       "Bash(timeout 300 ./orchestrate.sh tasks/US-000-smoke.md)",
       "Bash(./orchestrate.sh tasks/US-000-smoke.md)",
-      "Bash(./orchestrate.sh --resume US-001)"
+      "Bash(./orchestrate.sh --resume US-001)",
+      "Bash(git -C /Users/svyatoslavtt/Desktop/artkai/tower-front fetch origin factory/US-002)",
+      "Bash(git -C /Users/svyatoslavtt/Desktop/artkai/tower-front log --oneline origin/main..origin/factory/US-002)",
+      "Bash(git -C /Users/svyatoslavtt/Desktop/artkai/tower-front show --stat 2c7a7ab)"
     ],
     "deny": [
       "Bash(rm -rf /*)",

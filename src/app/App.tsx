@@ -3,12 +3,10 @@ import { ThemeProvider } from "@/app/providers/ThemeProvider";
 
 import { AppRouter } from "./router";
 
-export function App() {
-  return (
-    <StoreProvider>
-      <ThemeProvider>
-        <AppRouter />
-      </ThemeProvider>
-    </StoreProvider>
-  );
-}
+export const App = () => (
+  <StoreProvider>
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
+  </StoreProvider>
+);
