@@ -6,6 +6,8 @@ Append-only. Every PR must add an entry.
 
 ### Added
 
+- **US-002 — Ported legacy Home and People Directory UI primitives into `src/shared/ui/`** with colocated `*.mock.ts` and `*.stories.tsx` per component: `PageHeader`, `StatBox`, `ExportButton`, `AIPanel`, `Drawer`. Storybook-only; no module/page/router wiring (deferred to a follow-up story).
+- Semantic color tokens (`--color-positive`, `--color-negative`, `--color-warning`, `--color-info`, `--color-purple`, `--color-teal`) in `src/index.css` for both light and dark themes — required by the legacy palette referenced by ported components.
 - **Hard doc-sync gate for agents.** New skill [`.claude/skills/check-docs-sync/SKILL.md`](.claude/skills/check-docs-sync/SKILL.md) — 6 semantic checks (modules ↔ module CLAUDE.md, RBAC keys, routes, code-style ↔ ESLint, memory index, stack ↔ package.json). Task is not done until it reports `All docs/code in sync.` Modeled on the brain-ai-front pattern.
 - All 11 Tier-1+2 skill stubs filled in with Trigger/Inputs/Pre-flight/Steps/Gotchas/Validation loop/Post-flight — every one requires `check-docs-sync` to pass before declaring done.
 - `docs/*` (7 files) now carry an "Authoritative spec" header — if code drifts, code is wrong.
