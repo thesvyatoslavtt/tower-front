@@ -21,8 +21,14 @@ const router = createBrowserRouter([
   {
     element: <AppLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: "people", element: <PeoplePlaceholder /> },
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "people",
+        element: <PeoplePlaceholder />,
+      },
     ],
   },
 ]);

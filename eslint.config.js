@@ -59,6 +59,19 @@ export default tseslint.config(
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "no-multiple-empty-lines": ["error", { max: 1 }],
+      "object-curly-newline": [
+        "error",
+        {
+          ObjectExpression: { multiline: true, consistent: true, minProperties: 2 },
+          ObjectPattern: { multiline: true, consistent: true },
+          ImportDeclaration: { multiline: true, consistent: true },
+          ExportDeclaration: { multiline: true, consistent: true },
+        },
+      ],
+      "object-property-newline": [
+        "error",
+        { allowAllPropertiesOnSameLine: false },
+      ],
       "max-lines": ["error", { max: 400, skipBlankLines: true, skipComments: true }],
       "max-lines-per-function": ["warn", { max: 80, skipBlankLines: true, skipComments: true }],
       "id-length": ["error", { min: 2, exceptions: ["_"] }],

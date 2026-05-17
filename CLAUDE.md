@@ -37,9 +37,10 @@ Topical docs live under [`docs/`](docs/) and **are the authoritative specificati
 9. **RBAC via guards, not role compares.** `<Can permission="X">`, `usePermission("X")`, `<RequirePermission permission="X">`. NEVER `role === "admin"` or anything that reads the raw role array in UI.
 10. **Tokens only.** Colors via `var(--color-*)` or Tailwind theme classes (`bg-card`, `text-foreground`). No hardcoded hex outside `src/index.css` token definitions. No inline `style={{}}` unless the value is genuinely dynamic (e.g. `--progress: ${pct}%`).
 11. **File and function size.** File ≤300 lines (soft, split early), 400 lines is a hard ESLint error. Function ≤80 lines (warn).
-12. **Comments — WHY only.** Never describe WHAT the code does. No commented-out code (git remembers). TODOs use `// TODO(scope): description`.
-13. **Module CLAUDE.md is required.** Every `src/modules/<name>/` MUST have a `CLAUDE.md` following [`docs/module-claude-template.md`](docs/module-claude-template.md), ≤200 lines. `check-docs-sync` Check 1 enforces this.
-14. **Docs are the source of truth.** Never modify `docs/*` to retroactively match drifted code. Either fix the code, or change `docs/*` FIRST as a deliberate spec update (then bring code in line).
+12. **Multi-line object literals.** Any object literal containing a nested object, array, or function literal MUST be written multi-line — one property per line, trailing comma on every line. Flat scalar-only objects under 100 chars may stay inline. See [`docs/code-style.md` → Object literals](docs/code-style.md). Enforced by ESLint `object-curly-newline` + `object-property-newline`.
+13. **Comments — WHY only.** Never describe WHAT the code does. No commented-out code (git remembers). TODOs use `// TODO(scope): description`.
+14. **Module CLAUDE.md is required.** Every `src/modules/<name>/` MUST have a `CLAUDE.md` following [`docs/module-claude-template.md`](docs/module-claude-template.md), ≤200 lines. `check-docs-sync` Check 1 enforces this.
+15. **Docs are the source of truth.** Never modify `docs/*` to retroactively match drifted code. Either fix the code, or change `docs/*` FIRST as a deliberate spec update (then bring code in line).
 
 ## Code style (short)
 

@@ -11,6 +11,14 @@ export interface MenuItem {
 }
 
 export const MENU_ITEMS: MenuItem[] = [
-  { label: "Home", path: ROUTES.home, icon: Home },
-  { label: "People", path: ROUTES.people, icon: Users },
+  {
+    label: "Home",
+    path: ROUTES.home,
+    icon: Home,
+  },
+  {
+    label: "People",
+    path: ROUTES.people,
+    icon: Users,
+  },
 ];

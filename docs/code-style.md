@@ -127,6 +127,38 @@ dispatch(setTheme(theme === "light" ? "dark" : "light"));
 - Cross-module → `shared/config/<domain>.ts` (like `routes.ts`).
 - The type is always exported from the same file as the object.
 
+## Object literals — formatting
+
+Object literals **must be written multi-line whenever they contain a nested object, array, or function literal**. One property per line. Trailing comma on every line (Prettier `trailingComma: "all"` enforces this when the object is multi-line — but the agent must initiate the line break).
+
+**Bad** — readable on one screen but impossible to diff cleanly:
+
+```ts
+controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
+```
+
+**Good**:
+
+```ts
+controls: {
+  matchers: {
+    color: /(background|color)$/i,
+    date: /Date$/i,
+  },
+},
+```
+
+**When a flat object is fine on one line:** all values are scalars (strings, numbers, booleans, `null`) AND the whole literal fits comfortably under `printWidth: 100`. Example: `const point = { x: 1, y: 2 };`.
+
+**As soon as ANY value is itself an object, an array, a JSX node, or an arrow function:** break to multi-line.
+
+Enforced by ESLint:
+
+```js
+"object-curly-newline": ["error", { multiline: true, consistent: true, minProperties: 2 }],
+"object-property-newline": ["error", { allowAllPropertiesOnSameLine: false }],
+```
+
 ## Component file structure (strict order)
 
 ```tsx
