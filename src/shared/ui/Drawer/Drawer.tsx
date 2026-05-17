@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/utils";
 
 import type { ReactNode } from "react";
 
-interface DrawerProps {
+export interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -13,18 +13,20 @@ interface DrawerProps {
   width?: string;
 }
 
-export function Drawer({
+export const Drawer = ({
   isOpen,
   onClose,
   title,
   children,
   width = "w-96",
-}: DrawerProps) {
+}: DrawerProps) => {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) onClose();
     };
+
     window.addEventListener("keydown", handler);
+
     return () => window.removeEventListener("keydown", handler);
   }, [isOpen, onClose]);
 
@@ -62,4 +64,4 @@ export function Drawer({
       </aside>
     </>
   );
-}
+};

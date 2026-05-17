@@ -11,7 +11,7 @@ type StatBoxTone =
   | "purple"
   | "teal";
 
-interface StatBoxProps {
+export interface StatBoxProps {
   label: ReactNode;
   value: string;
   tone?: StatBoxTone;
@@ -31,7 +31,7 @@ const TONE_VAR: Record<StatBoxTone, string> = {
   teal: "var(--color-teal)",
 };
 
-export function StatBox({
+export const StatBox = ({
   label,
   value,
   tone = "default",
@@ -39,8 +39,9 @@ export function StatBox({
   delta,
   icon,
   onClick,
-}: StatBoxProps) {
+}: StatBoxProps) => {
   const interactive = typeof onClick === "function";
+
   const className = cn(
     "rounded-xl border border-border bg-card p-4 text-left",
     interactive &&
@@ -85,4 +86,4 @@ export function StatBox({
   }
 
   return <div className={className}>{body}</div>;
-}
+};

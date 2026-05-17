@@ -1,18 +1,18 @@
 import type { ReactNode } from "react";
 
-interface PageHeaderProps {
+export interface PageHeaderProps {
   title: string;
   subtitle?: string;
   actions?: ReactNode;
   icon?: ReactNode;
 }
 
-export function PageHeader({
+export const PageHeader = ({
   title,
   subtitle,
   actions,
   icon,
-}: PageHeaderProps) {
+}: PageHeaderProps) => {
   return (
     <div className="mb-6 flex items-start justify-between">
       <div>
@@ -27,4 +27,4 @@ export function PageHeader({
       {actions && <div className="flex items-center gap-2">{actions}</div>}
     </div>
   );
-}
+};

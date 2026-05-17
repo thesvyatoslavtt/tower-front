@@ -9,23 +9,25 @@ export interface AISuggestion {
   interactionId?: string;
 }
 
-interface AIPanelProps {
+export interface AIPanelProps {
   items: AISuggestion[];
   onAction?: (interactionId: string) => void;
 }
 
-function accentFor(item: AISuggestion): string {
+const accentFor = (item: AISuggestion): string => {
   if (item.urgent) return "var(--color-negative)";
   if (item.warn) return "var(--color-warning)";
-  return "var(--color-info)";
-}
 
-export function AIPanel({ items, onAction }: AIPanelProps) {
+  return "var(--color-info)";
+};
+
+export const AIPanel = ({ items, onAction }: AIPanelProps) => {
   const [dismissed, setDismissed] = useState<Record<number, boolean>>({});
 
   if (!items.length) return null;
 
   const visible = items.filter((_, index) => !dismissed[index]);
+
   if (!visible.length) return null;
 
   return (
@@ -44,10 +46,12 @@ export function AIPanel({ items, onAction }: AIPanelProps) {
       </div>
       {items.map((item, index) => {
         if (dismissed[index]) return null;
+
         const accent = accentFor(item);
+
         return (
           <div
-            key={index}
+            key={item.interactionId ?? `${item.text}-${index}`}
             className="flex items-center gap-3 border-b border-border px-4 py-2.5 transition-opacity last:border-b-0"
             style={{ borderLeft: `3px solid ${accent}` }}
           >
@@ -94,4 +98,4 @@ export function AIPanel({ items, onAction }: AIPanelProps) {
       })}
     </div>
   );
-}
+};

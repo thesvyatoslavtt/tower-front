@@ -6,14 +6,15 @@ const EXPORT_DELAY_MS = 2000;
 
 type ExportFormat = "CSV" | "PDF";
 
-interface ExportButtonProps {
+export interface ExportButtonProps {
   onExport?: (format: ExportFormat) => void;
 }
 
-export function ExportButton({ onExport }: ExportButtonProps) {
+export const ExportButton = ({ onExport }: ExportButtonProps) => {
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const exportTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handler = (event: MouseEvent) => {
@@ -24,7 +25,9 @@ export function ExportButton({ onExport }: ExportButtonProps) {
         setOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handler);
+
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
@@ -32,14 +35,29 @@ export function ExportButton({ onExport }: ExportButtonProps) {
 
   useEffect(() => {
     if (!toast) return;
+
     const timer = setTimeout(clearToast, TOAST_TIMEOUT_MS);
+
     return () => clearTimeout(timer);
   }, [toast, clearToast]);
+
+  useEffect(() => {
+    return () => {
+      if (exportTimerRef.current) clearTimeout(exportTimerRef.current);
+    };
+  }, []);
 
   const handleExport = (format: ExportFormat) => {
     setOpen(false);
     setToast("Export started — file will download shortly");
-    setTimeout(() => setToast(`${format} export complete`), EXPORT_DELAY_MS);
+
+    if (exportTimerRef.current) clearTimeout(exportTimerRef.current);
+
+    exportTimerRef.current = setTimeout(
+      () => setToast(`${format} export complete`),
+      EXPORT_DELAY_MS,
+    );
+
     onExport?.(format);
   };
 
@@ -83,4 +101,4 @@ export function ExportButton({ onExport }: ExportButtonProps) {
       )}
     </div>
   );
-}
+};
