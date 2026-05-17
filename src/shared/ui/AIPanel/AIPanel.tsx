@@ -44,6 +44,7 @@ export const AIPanel = ({ items, onAction }: AIPanelProps) => {
           {visible.length} recommendation{visible.length !== 1 ? "s" : ""}
         </span>
       </div>
+
       {items.map((item, index) => {
         if (dismissed[index]) return null;
 
@@ -58,9 +59,11 @@ export const AIPanel = ({ items, onAction }: AIPanelProps) => {
             <span className="flex-shrink-0 text-[12px]" style={{ color: accent }}>
               {item.urgent ? "⚠" : "✧"}
             </span>
+
             <span className="flex-1 text-[12px] leading-relaxed text-muted-foreground">
               {item.text}
             </span>
+
             <div className="flex flex-shrink-0 gap-1.5">
               <button
                 type="button"

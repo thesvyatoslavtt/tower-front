@@ -24,6 +24,7 @@ export const PageHeader = ({
           <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>
         )}
       </div>
+
       {actions && <div className="flex items-center gap-2">{actions}</div>}
     </div>
   );

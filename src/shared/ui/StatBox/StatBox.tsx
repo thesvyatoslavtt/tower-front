@@ -54,13 +54,16 @@ export const StatBox = ({
         {icon}
         <span>{label}</span>
       </div>
+
       <div
         className="font-mono text-[26px] font-bold leading-none tracking-tight tabular-nums"
         style={{ color: TONE_VAR[tone] }}
       >
         {value}
       </div>
+
       {sub && <div className="mt-1.5 text-[11px] text-muted-foreground">{sub}</div>}
+
       {delta != null && (
         <div
           className="mt-1 text-[11px] font-semibold"
