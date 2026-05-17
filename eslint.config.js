@@ -7,7 +7,15 @@ import importPlugin from "eslint-plugin-import";
 import boundaries from "eslint-plugin-boundaries";
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules", "coverage"] },
+  {
+    ignores: [
+      "dist",
+      "node_modules",
+      "coverage",
+      "storybook-static",
+      ".storybook",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -117,6 +125,7 @@ export default tseslint.config(
   {
     files: [
       "src/**/pages/**/*.{ts,tsx}",
+      "src/**/*.stories.{ts,tsx}",
       "**/*.config.{ts,js,mjs}",
       "vite.config.ts",
       "vitest.config.ts",
